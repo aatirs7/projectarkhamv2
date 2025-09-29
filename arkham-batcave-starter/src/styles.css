@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body { @apply bg-black text-gotham-text; }
+
+.panel {
+  @apply bg-gotham-panel border border-gotham-border rounded-2xl shadow-lg;
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  from, to { opacity: 0; }
+  50% { opacity: 1; }
+}
