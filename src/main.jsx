@@ -5,7 +5,7 @@ import './styles.css'
 import Login from './pages/Login.jsx'
 import Dashboard from './pages/Dashboard.jsx'
 import FajrProtocol from './pages/FajrProtocol.jsx'
-import { AuthProvider, useAuth } from './state/auth.js'
+import { AuthProvider, useAuth } from './state/auth'
 
 function Protected({ children }) {
   const { authed } = useAuth()
