@@ -9,21 +9,34 @@ export default function FajrProtocol() {
   const [step, setStep] = useState('silence')
   const [seconds, setSeconds] = useState(120) // 2 minutes
   const [dua, setDua] = useState(randomDua())
-  const [verses] = useState(sampleAyat())
+  const [ayat] = useState(()=>sampleAyat())
   const nav = useNavigate()
+  const isMorning = useMemo(() => new Date().getHours() < 12, [])
 
-  useEffect(()=>{
+  useEffect(() => {
+    if (!isMorning) {
+      nav('/', { replace: true })
+    }
+  }, [isMorning, nav])
+
+  useEffect(() => {
+    if (!isMorning) return
     if (step !== 'silence') return
     const t = setInterval(()=> setSeconds(s=> (s>0? s-1:0)), 1000)
     return ()=> clearInterval(t)
-  },[step])
+  },[isMorning, step])
 
-  useEffect(()=>{
+  useEffect(() => {
+    if (!isMorning) return
     if (step==='silence' && seconds===0) setStep('dua')
-  },[seconds, step])
+  },[isMorning, seconds, step])
 
   function override() {
     setStep('dua')
+  }
+
+  if (!isMorning) {
+    return null
   }
 
   return (
@@ -38,25 +51,43 @@ export default function FajrProtocol() {
       {step==='dua' && (
         <div className="max-w-3xl text-center">
           <div className="text-2xl mb-4 leading-relaxed">{dua.ar}</div>
-          <div className="text-zinc-400">{dua.en}</div>
+          <div className="text-gotham-accent italic">{dua.translit}</div>
+          <div className="text-zinc-400 mt-4">{dua.en}</div>
           <div className="mt-8 flex items-center justify-center gap-4">
-            <button className="px-3 py-1 border border-gotham-border rounded text-gotham-accent" onClick={()=>setDua(randomDua())}>Generate another du'a</button>
-            <button className="px-3 py-1 border border-gotham-border rounded" onClick={()=>setStep('quran')}>Continue</button>
+            <button
+              className="px-3 py-1 border border-gotham-border rounded text-gotham-accent"
+              onClick={() => setDua(randomDua())}
+            >
+              Generate another du'a
+            </button>
+            <button
+              className="px-3 py-1 border border-gotham-border rounded"
+              onClick={() => setStep('quran')}
+            >
+              Continue
+            </button>
           </div>
         </div>
       )}
       {step==='quran' && (
         <div className="max-w-3xl">
-          <div className="space-y-6">
-            {verses.map((v, i)=> (
+          <div className="text-center text-xs uppercase tracking-[0.3em] text-zinc-500">{ayat.surah}</div>
+          <div className="space-y-6 mt-6">
+            {ayat.verses.map((v, i)=> (
               <div key={i}>
                 <div className="text-xl leading-relaxed">{v.ar}</div>
-                <div className="text-zinc-400 text-sm">{v.en}</div>
+                <div className="text-gotham-accent italic mt-2">{v.translit}</div>
+                <div className="text-zinc-400 text-sm mt-2">{v.en}</div>
               </div>
             ))}
           </div>
           <div className="text-center mt-10">
-            <button className="px-4 py-2 border border-gotham-border rounded text-gotham-accent" onClick={()=>setStep('complete')}>Complete Reading</button>
+            <button
+              className="px-4 py-2 border border-gotham-border rounded text-gotham-accent"
+              onClick={() => setStep('complete')}
+            >
+              Complete Reading
+            </button>
           </div>
         </div>
       )}
