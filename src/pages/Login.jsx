@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../state/auth'
+import { useAuth } from '../state/auth.jsx'
 
 const ACCESS_CODE = import.meta.env.VITE_ACCESS_CODE || '0000'
 
