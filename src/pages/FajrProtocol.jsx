@@ -40,8 +40,18 @@ export default function FajrProtocol() {
           <div className="text-2xl mb-4 leading-relaxed">{dua.ar}</div>
           <div className="text-zinc-400">{dua.en}</div>
           <div className="mt-8 flex items-center justify-center gap-4">
-            <button className="px-3 py-1 border border-gotham-border rounded text-gotham-accent" onClick={()=>setDua(randomDua())}>Generate another du'a</button>
-            <button className="px-3 py-1 border border-gotham-border rounded" onClick={()=>setStep('quran')}>Continue</button>
+            <button
+              className="px-3 py-1 border border-gotham-border rounded text-gotham-accent"
+              onClick={() => setDua(randomDua())}
+            >
+              Generate another du'a
+            </button>
+            <button
+              className="px-3 py-1 border border-gotham-border rounded"
+              onClick={() => setStep('quran')}
+            >
+              Continue
+            </button>
           </div>
         </div>
       )}
@@ -56,7 +66,12 @@ export default function FajrProtocol() {
             ))}
           </div>
           <div className="text-center mt-10">
-            <button className="px-4 py-2 border border-gotham-border rounded text-gotham-accent" onClick={()=>setStep('complete')}>Complete Reading</button>
+            <button
+              className="px-4 py-2 border border-gotham-border rounded text-gotham-accent"
+              onClick={() => setStep('complete')}
+            >
+              Complete Reading
+            </button>
           </div>
         </div>
       )}
