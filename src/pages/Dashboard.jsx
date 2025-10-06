@@ -1,5 +1,5 @@
 import React from 'react'
-import { useAuth } from '../state/auth'
+import { useAuth } from '../state/auth.jsx'
 import { Link } from 'react-router-dom'
 
 export default function Dashboard() {
